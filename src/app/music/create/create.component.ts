@@ -25,6 +25,7 @@ export class CreateComponent implements OnInit {
       artist: new FormControl('', Validators.required),
       length: new FormControl('', Validators.required),
       keySignature: new FormControl('', Validators.required),
+      albumTitle: new FormControl('', Validators.required),
     });
   }
 

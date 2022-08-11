@@ -31,6 +31,13 @@
                 <div *ngIf="f['keySignature'].errors f['keySignature'].errors['required']">Key Signature is required.</div>
             </div>
         </div>
+        <div class="form-group">
+            <label for="albumTitle">Album Title</label>
+            <input type="text" class="form-control" id="albumTitle" formControlName="albumTitle" />
+            <div *ngIf="f['albumTitle'].touched && f['albumTitle'].invalid" class="alert alert-danger">
+                <div *ngIf="f['albumTitle'].errors f['albumTitle'].errors['required']">Album Title is required.</div>
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary" [disabled]="!newSongForm.valid">Submit</button>
 
     </form>

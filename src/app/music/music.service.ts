@@ -9,8 +9,8 @@ import { Song, SongDTO } from './song';
   providedIn: 'root'
 })
 export class MusicService {
-  //private musicUrl = 'https://localhost:7189/api/Music';
-  private musicUrl = 'api/Music';
+  private musicUrl = 'https://localhost:7189/api/Music';
+  //private musicUrl = 'api/Music';
 
   private httpOptions = {
     headers: new HttpHeaders({

@@ -18,9 +18,9 @@ import { MusicModule } from './music/music.module';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }
+    // ),
     MusicModule
   ],
   providers: [],
