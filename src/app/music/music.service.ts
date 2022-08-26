@@ -4,12 +4,13 @@ import { from, Observable, throwError } from 'rxjs';
 import { catchError, of } from 'rxjs';
 
 import { Song, SongDTO } from './song';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MusicService {
-  private musicUrl = 'https://localhost:7189/api/Music';
+  private musicUrl = `${environment.apiUrl}/Music`;
   //private musicUrl = 'api/Music';
 
   private httpOptions = {

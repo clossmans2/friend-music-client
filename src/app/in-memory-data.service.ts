@@ -741,6 +741,6 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 
   genId(Music: Song[]): number {
-    return Music.length > 0 ? Math.max(...Music.map(song => song.id)) + 1 : 11;
+  return Music.length > 0 ? Math.max(...Music.map(song => song.id)) + 1 : 11;
   }
 }
