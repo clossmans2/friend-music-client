@@ -6,14 +6,14 @@
           <h1 class="d-flex align-items-center fs-4 text-white mb-0">FriendMusic</h1>
         </a>
         <div class="navbar-nav mr-auto">
-          <li *ngIf="!loggedIn" class="nav-item">
+          <li *ngIf="!loginDisplay" class="nav-item">
             <button class="btn btn-primary" (click)="login()">Login</button>
           </li>
-          <li *ngIf="loggedIn" class="nav-item">
+          <li *ngIf="loginDisplay" class="nav-item">
             <button class="btn btn-warning" (click)="logout()">Logout</button>
           </li>
           
-          <li *ngIf="loggedIn" class="nav-item">
+          <li *ngIf="loginDisplay" class="nav-item">
             <a routerLink="music" class="nav-link">Music</a>
           </li>
         </div>

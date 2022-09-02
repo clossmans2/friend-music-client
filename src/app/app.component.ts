@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
-import { EventMessage, EventType, Logger } from '@azure/msal-browser';
-import { isSuccess } from 'angular-in-memory-web-api';
-import { CryptoUtils } from 'msal';
-import { filter } from 'rxjs';
+import { InteractionStatus } from '@azure/msal-browser';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -13,39 +12,35 @@ import { filter } from 'rxjs';
 export class AppComponent {
   title = 'Friend Music App';
   isIframe = false;
-  loggedIn = false;
+  loginDisplay = false;
+  private readonly _destroying$ = new Subject<void>();
 
-  constructor(private broadcastService: MsalBroadcastService ,private authService: MsalService) { }
+  constructor(private broadcastService: MsalBroadcastService, private authService: MsalService) { }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.isIframe = window !== window.parent && !window.opener;
-    this.checkAccount();
 
-    this.broadcastService.msalSubject$
+    this.broadcastService.inProgress$
       .pipe(
-        filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_SUCCESS),
+        filter((status: InteractionStatus) => status === InteractionStatus.None),
+        takeUntil(this._destroying$)
       )
-      .subscribe((result: EventMessage) => {
-        console.log(result);
-      });
-
-      this.broadcastService.msalSubject$
-      .pipe(
-        filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_FAILURE),
-      )
-      .subscribe((result: EventMessage) => {
-        console.log(result);
-      });
-
-      this.authService.handleRedirectObservable().subscribe((authResponse) => {
-        console.log(authResponse);
-      });
+      .subscribe(() => {
+        this.setLoginDisplay();
+      })
   }
 
-  public checkAccount() {
-    this.loggedIn = !!this.authService.instance.getActiveAccount();
+  public setLoginDisplay() {
+    this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this._destroying$.next(undefined);
+    this._destroying$.complete();
   }
 
   public login() {

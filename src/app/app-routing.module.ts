@@ -9,6 +9,8 @@ const routes: Routes = [
   { path: 'music', component: IndexComponent, canActivate: [MsalGuard] },
 ];
 
+const isIframe = window !== window.parent && !window.opener;
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
